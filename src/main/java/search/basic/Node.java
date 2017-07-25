@@ -49,11 +49,12 @@ public class Node implements Comparable<Node>
 	}
 
 	@Override
-	public String toString() {
+	public String toString() 
+	{
 		if(container != null)
-			return "[Val "+value+(cluster.isEmpty()?"":" ,cluster "+cluster)+" ,Cont. "+container.getNumber() +" ]";//+getClass();
+			return "[Node "+value+(cluster.isEmpty()?"":" ,cluster "+cluster)+" ,Cont. "+container.getNumber() +" ]";
 		else
-			return "[Val "+value+(cluster.isEmpty()?"":" ,cluster "+cluster)+" ]";
+			return "[Node "+value+(cluster.isEmpty()?"":" ,cluster "+cluster)+" ]";
 	}
 
 	@Override
@@ -100,6 +101,18 @@ public class Node implements Comparable<Node>
 	public void setContainer(Partition container) {
 		this.container = container;
 	}
-	
+	public ArrayList<Node> getSelfOrCluster()
+	{
+		if(isClusterEmpty())
+		{
+			ArrayList<Node> arr = new ArrayList<>();
+			arr.add(this);
+			return arr;
+		}
+		else
+		{
+			return cluster;
+		}
+	}
 	
 }

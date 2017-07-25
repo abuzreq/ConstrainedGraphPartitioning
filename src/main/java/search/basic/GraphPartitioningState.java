@@ -1,22 +1,14 @@
 package search.basic;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Set;
 
 import org.jgrapht.graph.SimpleGraph;
 
-import util.*;
+import util.GraphUtil;
 
-/**
- * Forms the basis of a search state, should be inherited if the state is to be exteneded
- * @author abuzreq
- *
- */
 public class GraphPartitioningState extends SimpleGraph<Partition,PartitionBorder>
 {
-	//The removed nodes (through NodeRemoval actions)
+	/**The removed nodes (through NodeRemoval actions)**/
 	private ArrayList<Node> removed = new ArrayList<Node>();
 		
 	public void addToRemoved(Node node)
@@ -34,18 +26,6 @@ public class GraphPartitioningState extends SimpleGraph<Partition,PartitionBorde
 	public ArrayList<Node> getRemoved() {
 		return removed;
 	}
-
-	/*
-	public int getRemovedCellsSize() 
-	{	
-		int sum = 0;
-		
-		for(int i=0; i <removed.size();i++)
-		{
-			sum += removed.get(i).cluster.size();
-		}
-		return sum;
-	}*/
 	public int getRemovedSize() 
 	{	
 		return removed.size();
@@ -107,46 +87,16 @@ public class GraphPartitioningState extends SimpleGraph<Partition,PartitionBorde
 		gps.addAllToRemoved(removed);
 		return gps;	
 	}
-	public String graphString()
-	{
-		return GraphUtil.sizeOf(this) +" Vertices "+vertexSet() + " Edges "+edgeSet();
-		
-	}
-	
+
 	@Override
 	public String toString()
 	{
-		return hashCode()+" "+GraphUtil.sizeOf(this);
+		return "[QuotientGraph: <Nodes>= "+vertexSet() + " <Edges>= "+edgeSet() +" ]";
 	}
 
 	@Override
 	public int hashCode()
 	{
-		
-		String str= "";
-		Partition[] pars = GraphUtil.getPartitions(this);
-		Arrays.sort(pars,new Comparator<Partition>() {
-
-			public int compare(Partition p1, Partition p2) {
-				return p1.hashCode() - p2.hashCode();
-			}
-		});
-		for(int i = 0 ;i < pars.length;i++)
-		{
-			str += pars[i].hashCode() ;
-		}
-		
-		PartitionBorder[] borders = GraphUtil.getPartitionsBorders(this);
-		Arrays.sort(borders,new Comparator<PartitionBorder>() {
-
-			public int compare(PartitionBorder pb1, PartitionBorder pb2) {
-				return pb1.hashCode() - pb2.hashCode();
-			}
-		});
-		for(int i = 0 ;i < borders.length;i++)
-		{
-			str += borders[i].hashCode() ;
-		}
 		return super.hashCode();		
 	}
 

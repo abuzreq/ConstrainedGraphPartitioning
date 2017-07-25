@@ -53,4 +53,8 @@ public class Border extends DefaultEdge implements Comparable<Border> {
 	public int compareTo(Border b) {
 		return ((this.n1.getValue() * 100) + (this.n2.getValue() * 10)) - ((b.n1.getValue() * 100) + (b.n2.getValue() * 10));
 	}
+
+	public String toString() {
+		return "<B " + n1 + " <#> " + n2 + ">";
+	}
 }

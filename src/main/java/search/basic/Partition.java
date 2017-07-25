@@ -8,48 +8,21 @@ import java.util.Set;
 public  class Partition
 {	
 	private int number ;
-	private ArrayList<Node> neighbors = new ArrayList<Node>();
-	private ArrayList<Node> members = new ArrayList<Node>();
 	
-	
-	public ArrayList<Node> getNeighbors() {
-		return neighbors;
-	}
-
-	public ArrayList<Node> getMembers() {
-		return members;
-	}
-
-	public Partition(int num ,Node... values) {
-		members.addAll(Arrays.asList(values));
-		for (int i = 0; i < members.size(); i++) {
-			members.get(i).setContainer(this);
-		}
-		this.number = num;
-	}
-	
-	public Partition(int num ,ArrayList<Node> values) {
-		members.addAll(values);
-		for (int i = 0; i < members.size(); i++) {
-			members.get(i).setContainer(this);
-		}
-		this.number = num;
-	}
-
 	public Partition(int num) 
 	{
 		this.number = num;
 	}
-	// Creates a copy of the contructor passed
-	public Partition(Partition partition) {
-		this.members = new ArrayList<Node>(partition.members);
-		for (int i = 0; i < members.size(); i++) {
-			members.get(i).setContainer(this);
-		}
-		this.neighbors = new ArrayList<Node>(partition.neighbors);
+	
+	private ArrayList<Node> neighbors = new ArrayList<Node>();
+	private ArrayList<Node> members = new ArrayList<Node>();	
+	public ArrayList<Node> getNeighbors() {
+		return neighbors;
+	}
+	public ArrayList<Node> getMembers() {
+		return members;
 	}
 
-	
 	public int getNumber() {
 		return number;
 	}
@@ -87,7 +60,7 @@ public  class Partition
 
 	/*
 	 * Adds the node to members and assign its container to the this
-	 * partition *
+	 * partition 
 	 */
 	public void addMember(Node node)
 	{
@@ -101,6 +74,14 @@ public  class Partition
 		{
 			members.add(nodes[i]);
 			nodes[i].setContainer(this);
+		}
+	}
+	public void addMembers(ArrayList<Node> nodes)
+	{
+		for(int i = 0 ; i < nodes.size();i++)
+		{
+			members.add(nodes.get(i));
+			nodes.get(i).setContainer(this);
 		}
 	}
 	public void addMemberRemoveNeighbor(Node node) {
@@ -118,12 +99,15 @@ public  class Partition
 		members.remove(nd);
 		nd.setContainer(null);
 	}
+
 	/**
-	 * Creates a copy of the partition without copying the neighbors
-	 * */
-	public static Partition CreateCopyWithoutNeighbors(Partition partition) {
-		Partition p = new Partition(partition.number);
-		p.members = new ArrayList<Node>(partition.members);
+	 * Created a copy of the partition but doesn't copy the neighbors.
+	 */
+	@Override
+	public Partition clone()
+	{
+		Partition p = new Partition(this.number);
+		p.members = new ArrayList<Node>(this.members);
 		for (int i = 0; i < p.members.size(); i++) {
 			p.members.set(i, p.members.get(i).clone());
 			p.members.get(i).setContainer(p);
@@ -205,7 +189,7 @@ public  class Partition
 	public String toString() 
 	{
 		
-		return "Num"+number ;//+" Members"+printMembers()+")";//+"{members : " + members + ",Neighbors: " + neighbors + "}";
+		return "[Par "+number+"]" ;
 	}
 
 	public String printMembers() {

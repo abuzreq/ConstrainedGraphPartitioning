@@ -30,7 +30,7 @@ public class PartitionChangeAction implements Action {
 	}
 	@Override
 	public String toString() {
-		return "[Action:Partition= " + partition + " ,Node= " + node +"]";
+		return "[Action:Change Node= " + node +"to Partition= " + partition +"]";
 	}
 }
 

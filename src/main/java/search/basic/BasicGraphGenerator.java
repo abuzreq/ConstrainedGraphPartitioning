@@ -5,5 +5,5 @@ import org.jgrapht.graph.SimpleGraph;
 
 public interface BasicGraphGenerator 
 {
-	SimpleGraph<Node,Border> generate(int size,Random rand);
+	SimpleGraph<Node,Border> generate(int num,Random rand);
 }

@@ -40,8 +40,13 @@ public class ConstrainedGraphPartitioning
 	 * @param afterCoarseningSize the size of the basic graph G after coarsening (i.e. k in the paper).
 	 * @return a partitioning of the basic graph G that is isomorphic to the constraint graph C.
 	 */
-	public static GraphPartitioningState partitionConstrainedWithCoarseningAndRandomRestart(SearchConfiguration sc,BasicGraphGenerator generator,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit, int afterCoarseningSize )
+	public static GraphPartitioningState partitionConstrainedWithCoarseningAndRandomRestart(SearchConfiguration sc,int basicGraphSize,BasicGraphGenerator generator,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit, int afterCoarseningSize )
 	{
+		if(sc.getBasicGraph() == null)
+		{
+			sc.setBasicGraph(generator.generate(basicGraphSize,rand));
+		}
+		
 		int GSize = GraphUtil.sizeOf(sc.getBasicGraph());
 		int limit = initialLimitOnMaxNodesExpanded;
 		GraphPartitioningState result = null;
@@ -70,13 +75,13 @@ public class ConstrainedGraphPartitioning
 	public static GraphPartitioningState partitionConstrainedWithCoarseningAndRandomRestart(SearchConfiguration sc,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit,int afterCoarseningSize)
 	{
 		if(afterCoarseningSize != -1)
-			sc.setBasicGraph(GraphUtil.partitionToNodeGraph(GraphUtil.partition(sc.getBasicGraph(), afterCoarseningSize, PartitioningType.KERNEL_DETERMINISTIC,rand,true)));
+			sc.setBasicGraph(GraphUtil.partitionToNodeGraph(GraphUtil.partition(sc.getBasicGraph(), afterCoarseningSize, PartitioningType.KERNEL_DETERMINISTIC,rand,false)));
 		
 		int limit = initialLimitOnMaxNodesExpanded;
 		GraphPartitioningState result = null;
 		while(result == null)
 		{		
-			GraphPartitioningState initialState = GraphUtil.partition(sc.getBasicGraph(), GraphUtil.sizeOf(sc.getConstraintGraph()), PartitioningType.KMEANS_STOCHASTIC, rand,true);
+			GraphPartitioningState initialState = GraphUtil.partition(sc.getBasicGraph(), GraphUtil.sizeOf(sc.getConstraintGraph()), PartitioningType.KMEANS_STOCHASTIC, rand,false);
 			result =  partitionConstrained(sc,initialState, limit);
 			if(result == null)
 			{
@@ -95,9 +100,9 @@ public class ConstrainedGraphPartitioning
 	 * @param afterCoarseningSize the size of the basic graph G after coarsening (i.e. k in the paper).
 	 * @return a partitioning of the basic graph G that is isomorphic to the constraint graph C.
 	 */
-	public static GraphPartitioningState partitionConstrainedWithRandomRestart(SearchConfiguration sc,BasicGraphGenerator generator,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit, int afterCoarseningSize )
+	public static GraphPartitioningState partitionConstrainedWithRandomRestart(SearchConfiguration sc,int basicGraphSize,BasicGraphGenerator generator,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit, int afterCoarseningSize )
 	{		
-		return partitionConstrainedWithCoarseningAndRandomRestart(sc, generator, rand, initialLimitOnMaxNodesExpanded, increamentInLimit, -1);
+		return partitionConstrainedWithCoarseningAndRandomRestart(sc, basicGraphSize,generator,rand, initialLimitOnMaxNodesExpanded, increamentInLimit, -1);
 	}
 	/**
 	 * Employs a Random Restart policy (see Section 5.1 in the paper) by using the same basic graph but a different initial state each run through a stochastic algorithm.<br/> 
@@ -196,7 +201,7 @@ public class ConstrainedGraphPartitioning
 			{
 				if(maxNodesExpanded != -1 && ne.getNumOfExpandCalls() > maxNodesExpanded)
 				{
-					System.out.println("limit on num of nodes expansions reached = "+maxNodesExpanded);				
+					System.out.println("Limit on num of nodes expansions reached = "+maxNodesExpanded);				
 					thread.cancel();				
 				}
 			}
@@ -219,7 +224,7 @@ public class ConstrainedGraphPartitioning
 		}
 		else if (actions.get(0).isNoOp()) 
 		{
-			System.out.println("Already at a Solution");
+			//System.out.println("Already at a Solution");
 			return initialState;
 		}
 		
@@ -228,11 +233,6 @@ public class ConstrainedGraphPartitioning
 
 		return solution;		
 	}
-	
-
-	
-	
-	
 	
 	/***Internal Utility*****/
 	private static QueueSearch getQueueSearchObject(SearchType searchType) {

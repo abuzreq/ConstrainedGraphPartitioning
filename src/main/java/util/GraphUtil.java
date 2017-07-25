@@ -14,6 +14,8 @@ import java.util.TreeSet;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.alg.NeighborIndex;
+import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
+import org.jgrapht.alg.isomorphism.VF2GraphIsomorphismInspector;
 import org.jgrapht.alg.shortestpath.BellmanFordShortestPath;
 import org.jgrapht.graph.ListenableUndirectedGraph;
 import org.jgrapht.graph.SimpleGraph;
@@ -518,9 +520,10 @@ public class GraphUtil
 		int base = 0;
 		if(randomBase)
 			base = secondaryRand.nextInt(Integer.MAX_VALUE);
-
+		//assign the seeds to partitions
 		for (int i = 0; i < partitions.length; i++) {
-			partitions[i] = new Partition(base+i, nodes.get(taken.get(i)));
+			partitions[i] = new Partition(base+i);
+			partitions[i].addMember(nodes.get(taken.get(i)));
 		}
 		// assign each vertex to one of the partitions based on min path length
 		for (int i = 0; i < nodes.size(); i++) {
@@ -594,7 +597,7 @@ public class GraphUtil
 		Partition[] oldPars = GraphUtil.getPartitions(quotientGraph);
 		newQuotientGraph.addToRemoved(node);
 		for (int p = 0; p < oldPars.length; p++) {
-			Partition tmp = Partition.CreateCopyWithoutNeighbors(oldPars[p]);
+			Partition tmp =oldPars[p].clone();
 			int index = tmp.getMembers().indexOf(node);
 			if (index != -1) {
 				tmp.getMembers().remove(index);
@@ -628,7 +631,7 @@ public class GraphUtil
 		Partition newHostCopy = null;
 		Node newNeighborCopy = null;
 		for (int p = 0; p < oldPars.length; p++) {
-			Partition tmp = Partition.CreateCopyWithoutNeighbors(oldPars[p]);
+			Partition tmp = oldPars[p].clone();
 
 			// if this is the partition that used to have the node , then remove
 			// the node from the partition's copy (tmp)
@@ -757,4 +760,36 @@ public class GraphUtil
 		}
 	}
 		
+	
+	public static IsomorphicGraphMapping<Partition, PartitionBorder> getMapping(GraphPartitioningState graph, GraphPartitioningState wanted) {
+		VF2GraphIsomorphismInspector<Partition, PartitionBorder> inspector = new VF2GraphIsomorphismInspector<Partition, PartitionBorder>(graph,wanted);
+		if(inspector.isomorphismExists())
+		{
+			Iterator it = inspector.getMappings();
+			IsomorphicGraphMapping<Partition, PartitionBorder> isomorphisimMapping = (IsomorphicGraphMapping<Partition, PartitionBorder>) it.next();
+			
+			return isomorphisimMapping;
+		}
+		else
+		{
+			return null;
+		}
+		
+	}
+	public static Object nextState(GraphPartitioningState s, Action a,SimpleGraph<Node, Border> basicGraph) 
+	{
+		if (a instanceof PartitionChangeAction) 
+		{
+			PartitionChangeAction action = ((PartitionChangeAction) a);				
+			GraphPartitioningState o = GraphUtil.createHypotheticalGraph((GraphPartitioningState) s, basicGraph, action.getNode(), action.getPartition());
+			return o;
+		} 
+		else if (a instanceof NodeRemovalAction)
+		{
+			NodeRemovalAction action = ((NodeRemovalAction) a);
+			GraphPartitioningState o = GraphUtil.createHypotheticalGraph((GraphPartitioningState) s, basicGraph, action.getNodeToBeRemoved());
+			return o;
+		}
+		return null;
+	}
 }

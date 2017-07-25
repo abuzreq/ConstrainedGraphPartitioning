@@ -19,6 +19,6 @@ public class NodeRemovalAction implements Action{
 	@Override
 	public String toString() 
 	{
-		return "[Action:Remove vertex= "+nodeToBeRemoved+ "]";
+		return "[Action:Remove Node= "+nodeToBeRemoved+ "]";
 	}
 }

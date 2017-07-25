@@ -123,23 +123,14 @@ public class SearchConfiguration
 				}
 
 			};
+			
 			this.resultFunction = new ResultFunction() {
 				public Object result(Object s, Action a) 
 				{
-					long time = System.currentTimeMillis();
-					if (a instanceof PartitionChangeAction) {
-						PartitionChangeAction action = ((PartitionChangeAction) a);				
-						GraphPartitioningState o = GraphUtil.createHypotheticalGraph((GraphPartitioningState) s, basicGraph, action.getNode(), action.getPartition());
-						return o;
-					} else if (a instanceof NodeRemovalAction)
-					{
-						NodeRemovalAction action = ((NodeRemovalAction) a);
-						GraphPartitioningState o = GraphUtil.createHypotheticalGraph((GraphPartitioningState) s, basicGraph, action.getNodeToBeRemoved());
-						return o;
-					}
-					return null;
+					return GraphUtil.nextState((GraphPartitioningState)s,a,basicGraph);
 				}
 			};
+			
 			this.goalTest = new GoalTest()
 			{
 				public boolean isGoalState(Object state) 
@@ -149,7 +140,6 @@ public class SearchConfiguration
 					new VF2GraphIsomorphismInspector<Partition, PartitionBorder>(result, C);
 					if( inspector.isomorphismExists())
 					{
-						System.out.println("ISOMORPHISM");
 						return true;
 					}
 					else return false;
@@ -157,23 +147,13 @@ public class SearchConfiguration
 			};
 			//laplacianSpectralHeuristicFunction
 			this.heuristicFunction  = new HeuristicFunction() {
-				Random r =  new Random();
-				int num;
-				float sum = 0;
-				double min = Double.MAX_VALUE;
-
 				public double h(Object state) {
 					GraphPartitioningState graph = (GraphPartitioningState) state;
-					double d= GraphUtil.laplacianSpectralError(graph, C);
-					if(d < min)
-					{
-						min = d;
-					}
-					return d;
+					return  GraphUtil.laplacianSpectralError(graph, C);				
 				}
 				@Override
 				public String toString() {
-					return "(Laplacian Spectral Error) " + (sum / num);
+					return "(Laplacian Spectral Error) ";
 				}
 			};
 		}

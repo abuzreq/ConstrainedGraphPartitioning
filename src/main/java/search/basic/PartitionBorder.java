@@ -35,6 +35,6 @@ public class PartitionBorder extends DefaultEdge implements Comparable<Partition
 	}
 
 	public String toString() {
-		return "\n<PB " + p1 + " <#> " + p2 + ">("+hashCode()+")";
+		return "<PB " + p1 + " <#> " + p2 + ">";
 	}
 }
