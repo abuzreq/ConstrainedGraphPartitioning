@@ -18,22 +18,22 @@ public class SameBasicGraphStochasticPartitioningTest {
 	static int sizeOfBasicGraph = 200;
 	static int initialLimitOnMaxNodesExpanded = 10;
 	static int increamentInLimit = 50;
-	static int afterCoarseningSize = 40;
+	static int afterCoarseningSize = 75;
 	
 	static Random rand =  new Random();
 	public static void main(String[] args) 
 	{
 		VoronoiGenerator generator = new VoronoiGenerator();
 		//Generating the constrain graph
-		final GraphPartitioningState C  = GraphUtil.generateChainGraph(7);
+		final GraphPartitioningState C  = GraphUtil.generateChainGraph(20);
 		GraphPartitioningState result = null;
 		//Setting up the generator and generating the basic graph
-		generator.setupGenerator(sizeOfBasicGraph, true, false, 500, 500, true, true, false);
+		generator.setupGenerator(sizeOfBasicGraph, true, false, 500, 500, false, false, false);
 		SimpleGraph<Node,Border> G = generator.generate(sizeOfBasicGraph,rand);
 		
-		result = ConstrainedGraphPartitioning.partitionConstrainedWithRandomRestart(new SearchConfiguration(G, C),rand, initialLimitOnMaxNodesExpanded, increamentInLimit, afterCoarseningSize);	
+		result = ConstrainedGraphPartitioning.partitionConstrainedWithCoarseningAndRandomRestart(new SearchConfiguration(G, C),rand, initialLimitOnMaxNodesExpanded, increamentInLimit, afterCoarseningSize);	
 		System.out.println("Result Found");
-		System.out.println(result);
+		//System.out.println(result);
 		TestsUtil.colorizeRandom(result,Color.WHITE);
 		
 	}

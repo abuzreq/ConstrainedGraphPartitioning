@@ -27,7 +27,7 @@ public class DifferentBasicGraphDeterministicPartitioningTest {
 		generator.setupGenerator(sizeOfBasicGraph, true, false, 500, 500, true, true, false);
 
 		//Note that we pass the generator as well. An initial basic graph can be passed or set to null
-		result = ConstrainedGraphPartitioning.partitionConstrainedWithRandomRestart(new SearchConfiguration(null, C),sizeOfBasicGraph,generator,rand, initialLimitOnMaxNodesExpanded, increamentInLimit, afterCoarseningSize);	
+		result = ConstrainedGraphPartitioning.partitionConstrainedWithCoarseningAndRandomRestart(new SearchConfiguration(null, C),sizeOfBasicGraph,generator,rand, initialLimitOnMaxNodesExpanded, increamentInLimit, afterCoarseningSize);	
 		System.out.println("Result Found");
 		TestsUtil.colorizeRandom(result,Color.WHITE);
 	}

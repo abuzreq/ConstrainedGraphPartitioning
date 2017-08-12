@@ -531,7 +531,6 @@ public class GraphUtil
 			int length = 0, minLength = Integer.MAX_VALUE;
 			if (!taken.contains(i)) {
 				for (int j = 0; j < taken.size(); j++) {
-
 					List<Border> lst = BellmanFordShortestPath.findPathBetween(graph, nodes.get(i), nodes.get(taken.get(j))).getEdgeList();
 					if (lst == null)// there is a vertex that has no path to any
 									// of the means centers

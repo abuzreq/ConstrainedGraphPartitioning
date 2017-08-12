@@ -100,7 +100,7 @@ public class ConstrainedGraphPartitioning
 	 * @param afterCoarseningSize the size of the basic graph G after coarsening (i.e. k in the paper).
 	 * @return a partitioning of the basic graph G that is isomorphic to the constraint graph C.
 	 */
-	public static GraphPartitioningState partitionConstrainedWithRandomRestart(SearchConfiguration sc,int basicGraphSize,BasicGraphGenerator generator,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit, int afterCoarseningSize )
+	public static GraphPartitioningState partitionConstrainedWithRandomRestart(SearchConfiguration sc,int basicGraphSize,BasicGraphGenerator generator,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit )
 	{		
 		return partitionConstrainedWithCoarseningAndRandomRestart(sc, basicGraphSize,generator,rand, initialLimitOnMaxNodesExpanded, increamentInLimit, -1);
 	}
@@ -111,10 +111,9 @@ public class ConstrainedGraphPartitioning
 	 * @param rand the RNG which the stochastic algorithm will use to obtain different initial states.
 	 * @param initialLimitOnMaxNodesExpanded the initial value for the limit on the number of nodes to be expanded before terminating the search and starting a new run.
 	 * @param increamentInLimit how much the limit will increase, this method uses a linear increase policy.
-	 * @param afterCoarseningSize the size of the basic graph G after coarsening (i.e. k in the paper).
 	 * @return a partitioning of the basic graph G that is isomorphic to the constraint graph C.
 	 */
-	public static GraphPartitioningState partitionConstrainedWithRandomRestart(SearchConfiguration sc,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit,int afterCoarseningSize)
+	public static GraphPartitioningState partitionConstrainedWithRandomRestart(SearchConfiguration sc,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit)
 	{		
 		return partitionConstrainedWithCoarseningAndRandomRestart(sc, rand, initialLimitOnMaxNodesExpanded, increamentInLimit, -1);
 	}
