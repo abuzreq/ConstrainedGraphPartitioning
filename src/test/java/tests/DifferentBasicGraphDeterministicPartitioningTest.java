@@ -1,4 +1,4 @@
-package voronoi_test;
+package tests;
 
 import java.awt.Color;
 import java.util.Random;

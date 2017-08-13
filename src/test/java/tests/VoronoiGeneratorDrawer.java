@@ -1,5 +1,8 @@
-package voronoi_test;
+package tests;
 
+
+import java.util.concurrent.Callable;
+import java.util.function.Function;
 
 import processing.core.PApplet;
 
@@ -26,5 +29,29 @@ public class VoronoiGeneratorDrawer extends PApplet
 	public void draw()
 	{
 		VoronoiGenerator.instance.draw(this);
+	}
+
+	public static Callable onRight,onLeft;
+	public void keyPressed()
+	{
+		 if (key == CODED) 
+		 {
+			try
+			{
+			    if (keyCode == RIGHT)
+			    {
+			    	onRight.call();
+			    }
+			    else if (keyCode == LEFT)
+			    {
+			    	onLeft.call();
+			    }
+			}
+			catch(Exception e)
+			{
+				System.out.println("");
+			}
+		 }
+
 	}
 }

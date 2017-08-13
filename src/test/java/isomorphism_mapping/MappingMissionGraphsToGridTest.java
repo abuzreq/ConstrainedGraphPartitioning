@@ -15,6 +15,7 @@ import search.basic.Partition;
 import search.basic.PartitionBorder;
 import search.basic.SearchConfiguration;
 import util.GraphUtil;
+import util.TestsUtil;
 import util.Util;
 
 
@@ -92,7 +93,7 @@ public class MappingMissionGraphsToGridTest
 		
 		//reading the basic graph, in this example we are reading a 5x5 grid , you can see an image for it in test_graphs , called grid5x5.png
 		SimpleGraph<Node,Border> G ;
-		G = Util.readBasicGraphs("src/test/java/test_graphs/grid5x5.in").get(0);
+		G = TestsUtil.readBasicGraphs("src/test/java/test_graphs/grid5x5.in").get(0);
 		SearchConfiguration searchConfiguration = new SearchConfiguration(G, C);
 		GraphPartitioningState result = ConstrainedGraphPartitioning.partitionConstrainedWithRandomRestart(searchConfiguration, rand, initialLimitOnMaxNodesExpanded, increamentInLimit);
 	

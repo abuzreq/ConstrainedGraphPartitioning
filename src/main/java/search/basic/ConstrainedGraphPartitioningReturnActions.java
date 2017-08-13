@@ -27,7 +27,7 @@ import search.enums.SearchStrategy;
 import search.enums.SearchType;
 import util.GraphUtil;
 
-public class ConstrainedGraphPartitioning
+public class ConstrainedGraphPartitioningReturnActions
 {
 	/**
 	 * Uses the idea of coarsening to reduce the size of the search space by reducing the size of the basic graph G.<br/>
@@ -40,7 +40,7 @@ public class ConstrainedGraphPartitioning
 	 * @param afterCoarseningSize the size of the basic graph G after coarsening (i.e. k in the paper).
 	 * @return a partitioning of the basic graph G that is isomorphic to the constraint graph C.
 	 */
-	public static GraphPartitioningState partitionConstrainedWithCoarseningAndRandomRestart(SearchConfiguration sc,int basicGraphSize,BasicGraphGenerator generator,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit, int afterCoarseningSize )
+	public static InitialStateActionsPair partitionConstrainedWithCoarseningAndRandomRestart(SearchConfiguration sc,int basicGraphSize,BasicGraphGenerator generator,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit, int afterCoarseningSize )
 	{
 		if(sc.getBasicGraph() == null)
 		{
@@ -49,7 +49,7 @@ public class ConstrainedGraphPartitioning
 		
 		int GSize = GraphUtil.sizeOf(sc.getBasicGraph());
 		int limit = initialLimitOnMaxNodesExpanded;
-		GraphPartitioningState result = null;
+		InitialStateActionsPair result = null;
 		while(result == null)
 		{	
 			result = partitionConstrainedWithCoarsening(sc,rand,afterCoarseningSize,limit);
@@ -72,13 +72,13 @@ public class ConstrainedGraphPartitioning
 	 * @param afterCoarseningSize the size of the basic graph G after coarsening (i.e. k in the paper).
 	 * @return a partitioning of the basic graph G that is isomorphic to the constraint graph C.
 	 */
-	public static GraphPartitioningState partitionConstrainedWithCoarseningAndRandomRestart(SearchConfiguration sc,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit,int afterCoarseningSize)
+	public static InitialStateActionsPair partitionConstrainedWithCoarseningAndRandomRestart(SearchConfiguration sc,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit,int afterCoarseningSize)
 	{
 		if(afterCoarseningSize != -1)
 			sc.setBasicGraph(GraphUtil.partitionToNodeGraph(GraphUtil.partition(sc.getBasicGraph(), afterCoarseningSize, PartitioningType.KERNEL_DETERMINISTIC,rand,false)));
 		
 		int limit = initialLimitOnMaxNodesExpanded;
-		GraphPartitioningState result = null;
+		InitialStateActionsPair result = null;
 		while(result == null)
 		{		
 			GraphPartitioningState initialState = GraphUtil.partition(sc.getBasicGraph(), GraphUtil.sizeOf(sc.getConstraintGraph()), PartitioningType.KMEANS_STOCHASTIC, rand,false);
@@ -100,7 +100,7 @@ public class ConstrainedGraphPartitioning
 	 * @param afterCoarseningSize the size of the basic graph G after coarsening (i.e. k in the paper).
 	 * @return a partitioning of the basic graph G that is isomorphic to the constraint graph C.
 	 */
-	public static GraphPartitioningState partitionConstrainedWithRandomRestart(SearchConfiguration sc,int basicGraphSize,BasicGraphGenerator generator,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit )
+	public static InitialStateActionsPair partitionConstrainedWithRandomRestart(SearchConfiguration sc,int basicGraphSize,BasicGraphGenerator generator,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit )
 	{		
 		return partitionConstrainedWithCoarseningAndRandomRestart(sc, basicGraphSize,generator,rand, initialLimitOnMaxNodesExpanded, increamentInLimit, -1);
 	}
@@ -113,7 +113,7 @@ public class ConstrainedGraphPartitioning
 	 * @param increamentInLimit how much the limit will increase, this method uses a linear increase policy.
 	 * @return a partitioning of the basic graph G that is isomorphic to the constraint graph C.
 	 */
-	public static GraphPartitioningState partitionConstrainedWithRandomRestart(SearchConfiguration sc,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit)
+	public static InitialStateActionsPair partitionConstrainedWithRandomRestart(SearchConfiguration sc,Random rand, int initialLimitOnMaxNodesExpanded,int increamentInLimit)
 	{		
 		return partitionConstrainedWithCoarseningAndRandomRestart(sc, rand, initialLimitOnMaxNodesExpanded, increamentInLimit, -1);
 	}
@@ -124,7 +124,7 @@ public class ConstrainedGraphPartitioning
 	 * @param maxNodesExpanded the limit on the number of nodes to be expanded before terminating the search.
 	 * @return a partitioning of the basic graph G that is isomorphic to the constraint graph C.
 	 */
-	public static GraphPartitioningState partitionConstrainedWithCoarsening(SearchConfiguration sc,Random rand,int afterCoarseningSize, int maxNodesExpanded )
+	public static InitialStateActionsPair partitionConstrainedWithCoarsening(SearchConfiguration sc,Random rand,int afterCoarseningSize, int maxNodesExpanded )
 	{
 		if(afterCoarseningSize != -1)
 			sc.setBasicGraph(GraphUtil.partitionToNodeGraph(GraphUtil.partition(sc.getBasicGraph(), afterCoarseningSize, PartitioningType.KERNEL_DETERMINISTIC,rand,true)));
@@ -145,12 +145,12 @@ public class ConstrainedGraphPartitioning
 	 * @param maxNodesExpanded  the limit on the number of nodes to be expanded before terminating the search.
 	 * @return a partitioning of the basic graph G that is isomorphic to the constraint graph C.
 	 */
-	public static GraphPartitioningState partitionConstrainedWithIterativeCoarsening(SearchConfiguration sc,Random rand, int afterCoarseningInitialSize ,int coarseningIncreament, int maxNodesExpanded)
+	public static InitialStateActionsPair partitionConstrainedWithIterativeCoarsening(SearchConfiguration sc,Random rand, int afterCoarseningInitialSize ,int coarseningIncreament, int maxNodesExpanded)
 	{
 		int GSize = GraphUtil.sizeOf(sc.getBasicGraph());
 		for(int c = afterCoarseningInitialSize;c < GSize;c += coarseningIncreament)
 		{
-			GraphPartitioningState result = partitionConstrainedWithCoarsening(sc,rand,maxNodesExpanded,c);
+			InitialStateActionsPair  result = partitionConstrainedWithCoarsening(sc,rand,maxNodesExpanded,c);
 			if(result  != null)
 				return result;
 		}
@@ -164,7 +164,7 @@ public class ConstrainedGraphPartitioning
 	 * @param maxNodesExpanded the limit on the number of nodes to be expanded before terminating the search.
 	 * @return a partitioning of the basic graph G that is isomorphic to the constraint graph C.
 	 */
-	public static GraphPartitioningState partitionConstrained(SearchConfiguration sc,GraphPartitioningState initialState, int maxNodesExpanded)
+	public static InitialStateActionsPair partitionConstrained(SearchConfiguration sc,GraphPartitioningState initialState, int maxNodesExpanded)
 	{
 		return partitionConstrained(sc.getBasicGraph(), sc.getConstraintGraph(), initialState, sc.getGoalTest(), 
 				sc.getHeuristicFunction(), sc.getSearchType(), sc.getSearchStrategy(), sc.isPreventGaps(), sc.getResultFunction(), 
@@ -174,7 +174,7 @@ public class ConstrainedGraphPartitioning
 	/**
 	 * This is the vanilla version of the algorithm. Meaning of each parameter can be seen in each respective class or in SearchConfiguration 
 	 */
-	public static GraphPartitioningState partitionConstrained(SimpleGraph<Node,Border> basicGraph,GraphPartitioningState constraintGraph,GraphPartitioningState initialState,GoalTest goalTest,HeuristicFunction heuristicFunction,SearchType searchType,SearchStrategy searchStrategy,boolean preventGaps,ResultFunction resultsFunction,ActionsFunction actionsFunction,boolean allowVertexRemoval,boolean allowEarlyGoalTest,int maxNodesExpanded) 
+	public static InitialStateActionsPair partitionConstrained(SimpleGraph<Node,Border> basicGraph,GraphPartitioningState constraintGraph,GraphPartitioningState initialState,GoalTest goalTest,HeuristicFunction heuristicFunction,SearchType searchType,SearchStrategy searchStrategy,boolean preventGaps,ResultFunction resultsFunction,ActionsFunction actionsFunction,boolean allowVertexRemoval,boolean allowEarlyGoalTest,int maxNodesExpanded) 
 	{
 		Problem problem = new Problem(initialState, actionsFunction, resultsFunction, goalTest);
 		QueueSearch queueSearch = getQueueSearchObject(searchType);
@@ -182,7 +182,7 @@ public class ConstrainedGraphPartitioning
 
 		SearchForActions searchStratagyObject = getSearchStratagyObject(searchStrategy, queueSearch, heuristicFunction);
 		List<Action> actions = new LinkedList<>();
-
+		InitialStateActionsPair initialStateActionsPair;
 		CancelableThread thread = new CancelableThread(new Runnable() 
 		{
 			
@@ -222,15 +222,13 @@ public class ConstrainedGraphPartitioning
 			return null;
 		}
 		else if (actions.get(0).isNoOp()) 
-		{
+		{		
 			//System.out.println("Already at a Solution");
-			return initialState;
 		}
 		
-		//Find the final state after applying the actions found on the initial state
-		GraphPartitioningState solution = GraphUtil.applyActions(initialState,basicGraph,actions);
-
-		return solution;		
+		initialStateActionsPair = new InitialStateActionsPair(initialState, actions);
+		initialStateActionsPair.setG(basicGraph);
+		return initialStateActionsPair;		
 	}
 	
 	/***Internal Utility*****/
@@ -259,5 +257,30 @@ public class ConstrainedGraphPartitioning
 	}
 	
 	
+	public static class InitialStateActionsPair
+	{
+		GraphPartitioningState initialState;
+		List<Action> actions;
+		SimpleGraph<Node,Border> G;
+		public InitialStateActionsPair(GraphPartitioningState initialState,List<Action> actions)
+		{
+			this.initialState =initialState;
+			this.actions = actions;
+		}
+		public GraphPartitioningState getInitialState() {
+			return initialState;
+		}
+		public List<Action> getActions() {
+			return actions;
+		}
+		public SimpleGraph<Node, Border> getG() {
+			return G;
+		}
+		public void setG(SimpleGraph<Node, Border> g) {
+			G = g;
+		}
+		
+		
+	}
 	
 }

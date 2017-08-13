@@ -14,10 +14,10 @@ import search.basic.Node;
 import search.basic.Partition;
 import search.basic.PartitionBorder;
 import search.basic.SearchConfiguration;
+import tests.VoronoiGenerator;
 import util.GraphUtil;
 import util.TestsUtil;
 import util.Util;
-import voronoi_test.VoronoiGenerator;
 public class MappinggMissionGraphsNavMeshTest
 {
 	
@@ -93,7 +93,7 @@ public class MappinggMissionGraphsNavMeshTest
 		//The basic graph here is the navigation mesh seen in http://jceipek.com/Olin-Coding-Tutorials/pathing.html ,
 		//also in the presentation at PCGWorkshop 2017
 		
-		SimpleGraph<Node,Border> G = Util.readBasicGraphs("src/test/java/test_graphs/LinkingMG.in").get(0);
+		SimpleGraph<Node,Border> G = TestsUtil.readBasicGraphs("src/test/java/test_graphs/LinkingMG.in").get(0);
 		
 		SearchConfiguration searchConfiguration = new SearchConfiguration(G, C);
 		GraphPartitioningState result = ConstrainedGraphPartitioning.partitionConstrainedWithRandomRestart(searchConfiguration, rand, initialLimitOnMaxNodesExpanded, increamentInLimit);

@@ -14,9 +14,9 @@ import search.basic.Node;
 import search.basic.Partition;
 import search.basic.PartitionBorder;
 import search.basic.SearchConfiguration;
+import tests.VoronoiGenerator;
 import util.GraphUtil;
 import util.TestsUtil;
-import voronoi_test.VoronoiGenerator;
 public class TerrainIsomorphismMappingTest
 {
 	

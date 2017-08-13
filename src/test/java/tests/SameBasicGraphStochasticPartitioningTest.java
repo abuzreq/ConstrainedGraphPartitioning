@@ -1,4 +1,4 @@
-package voronoi_test;
+package tests;
 
 import java.awt.Color;
 import java.util.Random;
@@ -25,7 +25,7 @@ public class SameBasicGraphStochasticPartitioningTest {
 	{
 		VoronoiGenerator generator = new VoronoiGenerator();
 		//Generating the constrain graph
-		final GraphPartitioningState C  = GraphUtil.generateChainGraph(20);
+		final GraphPartitioningState C  = GraphUtil.generateChainGraph(8);
 		GraphPartitioningState result = null;
 		//Setting up the generator and generating the basic graph
 		generator.setupGenerator(sizeOfBasicGraph, true, false, 500, 500, false, false, false);

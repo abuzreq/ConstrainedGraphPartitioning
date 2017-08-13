@@ -1,4 +1,4 @@
-package voronoi_test;
+package tests;
 
 /* Fortune's algorithm for computing the voronoi diagram
  * Useful when all PVectors are known at the start
@@ -29,7 +29,7 @@ import processing.core.PVector;
 import search.basic.BasicGraphGenerator;
 import search.basic.Border;
 import search.basic.Node;
-import voronoi_test.VoronoiGenerator.Map.Face;
+import tests.VoronoiGenerator.Map.Face;
 
 public class VoronoiGenerator implements BasicGraphGenerator
 {
@@ -191,7 +191,7 @@ public class VoronoiGenerator implements BasicGraphGenerator
 		{
 			if(!drawnOnce)
 			{
-				PApplet.main("voronoi_test.VoronoiGeneratorDrawer");
+				PApplet.main("tests.VoronoiGeneratorDrawer");
 			}
 			currentDrawer = VoronoiGeneratorDrawer.instance;
 			map = new Map(currentDrawer);
@@ -1686,7 +1686,7 @@ public class VoronoiGenerator implements BasicGraphGenerator
 			ap.background(colorToInt(this.color(0, 0, 0)));
 
 			if (created) {
-				ap.background(colorToInt(biomesColor[1]));
+				ap.background(colorToInt(Color.WHITE));
 				ap.smooth();				
 				for (int i = 0; i < voronoiPoints.size(); i++)
 					ap.point(voronoiPoints.get(i).x, voronoiPoints.get(i).y);

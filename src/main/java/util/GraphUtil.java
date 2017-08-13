@@ -40,7 +40,6 @@ public class GraphUtil
 	private static Random secondaryRand = new Random();
 
 	/**
-	 * 
 	 * @param initialState
 	 * @param G
 	 * @param actions
@@ -65,6 +64,7 @@ public class GraphUtil
 		}
 		return result;
 	}
+
 	/**
 	 * 
 	 * @param edges1
