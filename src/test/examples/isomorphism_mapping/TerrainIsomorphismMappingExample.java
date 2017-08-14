@@ -7,6 +7,7 @@ import java.util.Random;
 import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
 import org.jgrapht.graph.SimpleGraph;
 
+import examples.VoronoiGenerator;
 import search.basic.Border;
 import search.basic.ConstrainedGraphPartitioning;
 import search.basic.GraphPartitioningState;
@@ -14,10 +15,9 @@ import search.basic.Node;
 import search.basic.Partition;
 import search.basic.PartitionBorder;
 import search.basic.SearchConfiguration;
-import tests.VoronoiGenerator;
 import util.GraphUtil;
 import util.TestsUtil;
-public class TerrainIsomorphismMappingTest
+public class TerrainIsomorphismMappingExample
 {
 	
 	static int sizeOfBasicGraph = 200;

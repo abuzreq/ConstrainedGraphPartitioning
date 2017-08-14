@@ -7,6 +7,7 @@ import java.util.Random;
 import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
 import org.jgrapht.graph.SimpleGraph;
 
+import examples.VoronoiGenerator;
 import search.basic.Border;
 import search.basic.ConstrainedGraphPartitioning;
 import search.basic.GraphPartitioningState;
@@ -14,11 +15,10 @@ import search.basic.Node;
 import search.basic.Partition;
 import search.basic.PartitionBorder;
 import search.basic.SearchConfiguration;
-import tests.VoronoiGenerator;
 import util.GraphUtil;
 import util.TestsUtil;
 import util.Util;
-public class MappinggMissionGraphsNavMeshTest
+public class ConvertingMissionGraphsExample
 {
 	
 	static int sizeOfBasicGraph = 200;
@@ -90,24 +90,23 @@ public class MappinggMissionGraphsNavMeshTest
 		
 		Random rand = new Random();
 		
-		//The basic graph here is the navigation mesh seen in http://jceipek.com/Olin-Coding-Tutorials/pathing.html ,
-		//also in the presentation at PCGWorkshop 2017
-		
-		SimpleGraph<Node,Border> G = TestsUtil.readBasicGraphs("src/test/java/test_graphs/LinkingMG.in").get(0);
+		//Generating the basic graph
+		VoronoiGenerator generator = new VoronoiGenerator();
+		generator.setupGenerator(sizeOfBasicGraph, true, false, 500, 500, false, false, false);
+		SimpleGraph<Node,Border> G = generator.generate(sizeOfBasicGraph, rand);
 		
 		SearchConfiguration searchConfiguration = new SearchConfiguration(G, C);
-		GraphPartitioningState result = ConstrainedGraphPartitioning.partitionConstrainedWithRandomRestart(searchConfiguration, rand, initialLimitOnMaxNodesExpanded, increamentInLimit);
-
-			
+		GraphPartitioningState result = ConstrainedGraphPartitioning.partitionConstrainedWithCoarseningAndRandomRestart(searchConfiguration, rand, initialLimitOnMaxNodesExpanded, increamentInLimit, afterCoarseningSize);
 		
-		System.out.println("Removed "+result.getRemoved());
-		//Now, through the isomorphism mapping we will color the partitions in the result according to the action type of their corresponding nodes in C (as described by the map we build earlier)
+		//Now, through the isomorphism mapping we will color the partitions in the result according to the terrain type of their corresponding nodes in C (as described by the map we build earlier)
 		IsomorphicGraphMapping<Partition,PartitionBorder> mapping = GraphUtil.getMapping(result, C);
 		for(Partition parInConstraint : C.vertexSet())
 		{
 			Partition parInResult = mapping.getVertexCorrespondence(parInConstraint, false);
-			System.out.println(parInConstraint + " -> "+parInResult.getMembers() );
-		}			
+			TestsUtil.colorize(parInResult.getMembers(),colorMap.get(actionsMap.get(parInConstraint)));	
+		}	
+		//Lastly we color the removed cells
+		TestsUtil.colorize(result.getRemoved(),Color.WHITE);
 	}
 	enum ActionType
 	{			

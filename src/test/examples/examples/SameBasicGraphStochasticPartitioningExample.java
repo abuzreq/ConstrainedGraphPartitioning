@@ -1,4 +1,4 @@
-package tests;
+package examples;
 
 import java.awt.Color;
 import java.util.Random;
@@ -13,7 +13,7 @@ import search.basic.SearchConfiguration;
 import util.GraphUtil;
 import util.TestsUtil;
 
-public class SameBasicGraphStochasticPartitioningTest {
+public class SameBasicGraphStochasticPartitioningExample {
 
 	static int sizeOfBasicGraph = 200;
 	static int initialLimitOnMaxNodesExpanded = 10;

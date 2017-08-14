@@ -1,4 +1,4 @@
-package tests;
+package examples;
 
 
 import java.util.concurrent.Callable;

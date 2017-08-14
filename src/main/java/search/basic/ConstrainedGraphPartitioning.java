@@ -192,7 +192,7 @@ public class ConstrainedGraphPartitioning
 				actions.addAll(searchStratagyObject.findActions(problem));				
 			}
 		});
-
+		
 		ne.addNodeListener(new NodeListener() 
 		{		
 			@Override
@@ -229,7 +229,9 @@ public class ConstrainedGraphPartitioning
 		
 		//Find the final state after applying the actions found on the initial state
 		GraphPartitioningState solution = GraphUtil.applyActions(initialState,basicGraph,actions);
-
+		solution.setNumNodesExpanded(ne.getNumOfExpandCalls());
+		solution.setPathLength(actions.size());
+		
 		return solution;		
 	}
 	

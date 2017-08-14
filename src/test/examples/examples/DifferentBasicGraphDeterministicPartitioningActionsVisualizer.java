@@ -1,4 +1,4 @@
-package tests;
+package examples;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -19,37 +19,36 @@ import search.basic.SearchConfiguration;
 import util.GraphUtil;
 import util.TestsUtil;
 
-
 /**
  * Press Right arrow to get the next state, left arrow to get the previous
  * 
  * @author abuzreq
  *
  */
-public class SameBasicGraphStochasticPartitioningActionsVisualizerTest {
+public class DifferentBasicGraphDeterministicPartitioningActionsVisualizer {
 
 	static int sizeOfBasicGraph = 200;
 	static int initialLimitOnMaxNodesExpanded = 10;
 	static int increamentInLimit = 50;
-	static int afterCoarseningSize = 75;
+	static int afterCoarseningSize = 40;
 	
 	static Random rand =  new Random();
 	public static void main(String[] args) 
 	{
 		VoronoiGenerator generator = new VoronoiGenerator();
 		//Generating the constrain graph
-		final GraphPartitioningState C  = GraphUtil.generateChainGraph(5);
-		//Setting up the generator and generating the basic graph
-		generator.setupGenerator(sizeOfBasicGraph, true, false, 500, 500, true, false, false);
-		SimpleGraph<Node,Border> G = generator.generate(sizeOfBasicGraph,rand);
-		
+		final GraphPartitioningState C  = GraphUtil.generateChainGraph(7);
 		InitialStateActionsPair result = null;
-		result = ConstrainedGraphPartitioningReturnActions.partitionConstrainedWithCoarseningAndRandomRestart(new SearchConfiguration(G, C),rand, initialLimitOnMaxNodesExpanded, increamentInLimit,afterCoarseningSize);	
+		//Setting up the generator
+		generator.setupGenerator(sizeOfBasicGraph, true, false, 500, 500, true, true, false);
+
+		//Note that we pass the generator as well. An initial basic graph can be passed or set to null
+		result = ConstrainedGraphPartitioningReturnActions.partitionConstrainedWithCoarseningAndRandomRestart(new SearchConfiguration(null, C),sizeOfBasicGraph,generator,rand, initialLimitOnMaxNodesExpanded, increamentInLimit, afterCoarseningSize);	
 		System.out.println("Result Found");
 		//System.out.println(result);
 		current = result.getInitialState();
 		actions  = result.getActions();
-		SimpleGraph<Node,Border> lastUsedG = result.getG();
+		SimpleGraph<Node,Border> G = result.getG();
 		TestsUtil.colorizeFixed(current,Color.WHITE);
 		states.add(current);
 
@@ -69,7 +68,7 @@ public class SameBasicGraphStochasticPartitioningActionsVisualizerTest {
 					Action a = actions.get(0);
 					actions.remove(0);
 					final GraphPartitioningState next;
-					next = applyAction(lastUsedG,current,a);					
+					next = applyAction(G,current,a);					
 					states.add(next);
 					current = next;
 					index = states.size()-1;
@@ -108,6 +107,5 @@ public class SameBasicGraphStochasticPartitioningActionsVisualizerTest {
 		GraphPartitioningState result =  GraphUtil.applyActions(s, G, actions);
 		return result;
 	}
-
 
 }

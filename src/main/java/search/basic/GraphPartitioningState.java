@@ -32,8 +32,7 @@ public class GraphPartitioningState extends SimpleGraph<Partition,PartitionBorde
 	}
 	//Metrics**********************
 	private int numNodesExpanded;
-	private double pathCost;
-	private int lastCourseningValueUsed;
+	private double pathLength;
 	
 	
 	public int getNumNodesExpanded() {
@@ -42,18 +41,13 @@ public class GraphPartitioningState extends SimpleGraph<Partition,PartitionBorde
 	public void setNumNodesExpanded(int numNodesExpanded) {
 		this.numNodesExpanded = numNodesExpanded;
 	}
-	public double getPathCost() {
-		return pathCost;
+	public double getPathLength() {
+		return pathLength;
 	}
-	public void setPathCost(double pathCost) {
-		this.pathCost = pathCost;
+	public void setPathLength(double pathLength) {
+		this.pathLength = pathLength;
 	}
-	public int getLastCourseningValueUsed() {
-		return lastCourseningValueUsed;
-	}
-	public void setLastCourseningValueUsed(int lastCourseningValueUsed) {
-		this.lastCourseningValueUsed = lastCourseningValueUsed;
-	}
+
 	//********************
 	@Override
 	public boolean equals(Object obj )

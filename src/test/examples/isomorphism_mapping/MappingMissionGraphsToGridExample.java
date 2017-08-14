@@ -14,11 +14,12 @@ import search.basic.Node;
 import search.basic.Partition;
 import search.basic.PartitionBorder;
 import search.basic.SearchConfiguration;
-import tests.VoronoiGenerator;
 import util.GraphUtil;
 import util.TestsUtil;
 import util.Util;
-public class ConvertingMissionGraphsTest
+
+
+public class MappingMissionGraphsToGridExample
 {
 	
 	static int sizeOfBasicGraph = 200;
@@ -90,23 +91,23 @@ public class ConvertingMissionGraphsTest
 		
 		Random rand = new Random();
 		
-		//Generating the basic graph
-		VoronoiGenerator generator = new VoronoiGenerator();
-		generator.setupGenerator(sizeOfBasicGraph, true, false, 500, 500, false, false, false);
-		SimpleGraph<Node,Border> G = generator.generate(sizeOfBasicGraph, rand);
-		
+		//reading the basic graph, in this example we are reading a 5x5 grid , you can see an image for it in test_graphs , called grid5x5.png
+		SimpleGraph<Node,Border> G ;
+		G = TestsUtil.readBasicGraphs("src/test/java/test_graphs/grid5x5.in").get(0);
 		SearchConfiguration searchConfiguration = new SearchConfiguration(G, C);
-		GraphPartitioningState result = ConstrainedGraphPartitioning.partitionConstrainedWithCoarseningAndRandomRestart(searchConfiguration, rand, initialLimitOnMaxNodesExpanded, increamentInLimit, afterCoarseningSize);
+		GraphPartitioningState result = ConstrainedGraphPartitioning.partitionConstrainedWithRandomRestart(searchConfiguration, rand, initialLimitOnMaxNodesExpanded, increamentInLimit);
+	
+		System.out.println("Removed "+result.getRemoved());
 		
-		//Now, through the isomorphism mapping we will color the partitions in the result according to the terrain type of their corresponding nodes in C (as described by the map we build earlier)
+		//Now, through the isomorphism mapping we will color the partitions in the result according to the action type of their corresponding nodes in C (as described by the map we build earlier)
 		IsomorphicGraphMapping<Partition,PartitionBorder> mapping = GraphUtil.getMapping(result, C);
 		for(Partition parInConstraint : C.vertexSet())
 		{
 			Partition parInResult = mapping.getVertexCorrespondence(parInConstraint, false);
-			TestsUtil.colorize(parInResult.getMembers(),colorMap.get(actionsMap.get(parInConstraint)));	
+			System.out.println(parInConstraint + " -> "+parInResult.getMembers() );
 		}	
-		//Lastly we color the removed cells
-		TestsUtil.colorize(result.getRemoved(),Color.WHITE);
+
+		
 	}
 	enum ActionType
 	{			

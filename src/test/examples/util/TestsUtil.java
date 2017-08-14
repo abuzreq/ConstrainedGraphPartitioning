@@ -9,12 +9,12 @@ import java.util.Scanner;
 
 import org.jgrapht.graph.SimpleGraph;
 
+import examples.VoronoiGenerator.FaceNode;
 import search.basic.Border;
 import search.basic.GraphPartitioningState;
 import search.basic.Node;
 import search.basic.Partition;
 import search.basic.PartitionBorder;
-import tests.VoronoiGenerator.FaceNode;
 
 public class TestsUtil 
 {

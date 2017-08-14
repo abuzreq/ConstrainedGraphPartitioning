@@ -1,4 +1,4 @@
-package tests;
+package examples;
 
 /* Fortune's algorithm for computing the voronoi diagram
  * Useful when all PVectors are known at the start
@@ -24,12 +24,12 @@ import org.jgrapht.graph.SimpleGraph;
 
 import com.trickl.graph.Connectivity;
 
+import examples.VoronoiGenerator.Map.Face;
 import processing.core.PApplet;
 import processing.core.PVector;
 import search.basic.BasicGraphGenerator;
 import search.basic.Border;
 import search.basic.Node;
-import tests.VoronoiGenerator.Map.Face;
 
 public class VoronoiGenerator implements BasicGraphGenerator
 {

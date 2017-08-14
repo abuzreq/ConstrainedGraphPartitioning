@@ -7,6 +7,7 @@ import java.util.Random;
 import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
 import org.jgrapht.graph.SimpleGraph;
 
+import examples.VoronoiGenerator;
 import search.basic.Border;
 import search.basic.ConstrainedGraphPartitioning;
 import search.basic.GraphPartitioningState;
@@ -17,9 +18,7 @@ import search.basic.SearchConfiguration;
 import util.GraphUtil;
 import util.TestsUtil;
 import util.Util;
-
-
-public class MappingMissionGraphsToGridTest
+public class MappinggMissionGraphsNavMeshExample
 {
 	
 	static int sizeOfBasicGraph = 200;
@@ -91,23 +90,24 @@ public class MappingMissionGraphsToGridTest
 		
 		Random rand = new Random();
 		
-		//reading the basic graph, in this example we are reading a 5x5 grid , you can see an image for it in test_graphs , called grid5x5.png
-		SimpleGraph<Node,Border> G ;
-		G = TestsUtil.readBasicGraphs("src/test/java/test_graphs/grid5x5.in").get(0);
+		//The basic graph here is the navigation mesh seen in http://jceipek.com/Olin-Coding-Tutorials/pathing.html ,
+		//also in the presentation at PCGWorkshop 2017
+		
+		SimpleGraph<Node,Border> G = TestsUtil.readBasicGraphs("src/test/java/test_graphs/LinkingMG.in").get(0);
+		
 		SearchConfiguration searchConfiguration = new SearchConfiguration(G, C);
 		GraphPartitioningState result = ConstrainedGraphPartitioning.partitionConstrainedWithRandomRestart(searchConfiguration, rand, initialLimitOnMaxNodesExpanded, increamentInLimit);
-	
-		System.out.println("Removed "+result.getRemoved());
+
+			
 		
+		System.out.println("Removed "+result.getRemoved());
 		//Now, through the isomorphism mapping we will color the partitions in the result according to the action type of their corresponding nodes in C (as described by the map we build earlier)
 		IsomorphicGraphMapping<Partition,PartitionBorder> mapping = GraphUtil.getMapping(result, C);
 		for(Partition parInConstraint : C.vertexSet())
 		{
 			Partition parInResult = mapping.getVertexCorrespondence(parInConstraint, false);
 			System.out.println(parInConstraint + " -> "+parInResult.getMembers() );
-		}	
-
-		
+		}			
 	}
 	enum ActionType
 	{			
