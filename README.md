@@ -1,11 +1,13 @@
-# Constrained Graph Partitioning
+# Note: 
+    This is just an initial release for those wanting to experiment with the code early, I will add more explanations and examples of usage later one.
+
+# About
 This is the source code of the algorithm described in the paper:
 "On Using Graph Partitioning with Isomorphism Constraint in Procedural Content Generation"
 presented at PCG Workshop 2017 part of FDG 2017
 
-You can access the paper here:
-
-Or you can see the presentation at:
+You can see the presentation at:
+https://www.youtube.com/watch?v=Te2ek89EEUs
 
 
 # Available Examples
