@@ -191,7 +191,7 @@ public class VoronoiGenerator implements BasicGraphGenerator
 		{
 			if(!drawnOnce)
 			{
-				PApplet.main("tests.VoronoiGeneratorDrawer");
+				PApplet.main("examples.VoronoiGeneratorDrawer");
 			}
 			currentDrawer = VoronoiGeneratorDrawer.instance;
 			map = new Map(currentDrawer);

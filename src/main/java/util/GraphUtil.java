@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.jgrapht.Graph;
+import org.jgrapht.GraphPath;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.alg.NeighborIndex;
 import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
@@ -531,14 +532,20 @@ public class GraphUtil
 			int length = 0, minLength = Integer.MAX_VALUE;
 			if (!taken.contains(i)) {
 				for (int j = 0; j < taken.size(); j++) {
-					List<Border> lst = BellmanFordShortestPath.findPathBetween(graph, nodes.get(i), nodes.get(taken.get(j))).getEdgeList();
-					if (lst == null)// there is a vertex that has no path to any
+					GraphPath<Node,Border> path = BellmanFordShortestPath.findPathBetween(graph, nodes.get(i), nodes.get(taken.get(j)));
+					
+					if (path == null)// there is a vertex that has no path to any
 									// of the means centers
 					{
 						System.out.println("Some vertices have no path to their assigned center");
-					} else
+					} 
+					else
+					{
+						List<Border> lst  = path.getEdgeList();
 						length = lst.size();
-					if (length < minLength) {
+					}
+					if (length < minLength) 
+					{
 						minLength = length;
 						closest = j;
 					}

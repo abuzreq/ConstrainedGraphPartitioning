@@ -93,7 +93,7 @@ public class MappinggMissionGraphsNavMeshExample
 		//The basic graph here is the navigation mesh seen in http://jceipek.com/Olin-Coding-Tutorials/pathing.html ,
 		//also in the presentation at PCGWorkshop 2017
 		
-		SimpleGraph<Node,Border> G = TestsUtil.readBasicGraphs("src/test/java/test_graphs/LinkingMG.in").get(0);
+		SimpleGraph<Node,Border> G = TestsUtil.readBasicGraphs("src/test/examples/test_graphs/LinkingMG.in").get(0);
 		
 		SearchConfiguration searchConfiguration = new SearchConfiguration(G, C);
 		GraphPartitioningState result = ConstrainedGraphPartitioning.partitionConstrainedWithRandomRestart(searchConfiguration, rand, initialLimitOnMaxNodesExpanded, increamentInLimit);
