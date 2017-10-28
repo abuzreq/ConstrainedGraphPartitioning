@@ -10,6 +10,8 @@ import java.util.concurrent.Callable;
 import org.jgrapht.graph.SimpleGraph;
 
 import aima.core.agent.Action;
+import examples.VoronoiGenerator;
+import examples.VoronoiGeneratorDrawer;
 import search.basic.Border;
 import search.basic.ConstrainedGraphPartitioningReturnActions;
 import search.basic.ConstrainedGraphPartitioningReturnActions.InitialStateActionsPair;
