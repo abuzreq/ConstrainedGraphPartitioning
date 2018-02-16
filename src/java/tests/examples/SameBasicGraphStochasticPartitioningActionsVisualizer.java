@@ -26,7 +26,7 @@ import util.TestsUtil;
  * @author abuzreq
  *
  */
-public class SameBasicGraphStochasticPartitioningActionsVisualizerExample {
+public class SameBasicGraphStochasticPartitioningActionsVisualizer {
 
 	static int sizeOfBasicGraph = 200;
 	static int initialLimitOnMaxNodesExpanded = 10;

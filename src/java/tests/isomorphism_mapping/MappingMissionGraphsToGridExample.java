@@ -93,7 +93,7 @@ public class MappingMissionGraphsToGridExample
 		
 		//reading the basic graph, in this example we are reading a 5x5 grid , you can see an image for it in test_graphs , called grid5x5.png
 		SimpleGraph<Node,Border> G ;
-		G = TestsUtil.readBasicGraphs("src/test/examples/test_graphs/grid5x5.in").get(0);
+		G = TestsUtil.readBasicGraphs("src/java/tests/test_graphs/grid5x5.in").get(0);
 		SearchConfiguration searchConfiguration = new SearchConfiguration(G, C);
 		GraphPartitioningState result = ConstrainedGraphPartitioning.partitionConstrainedWithRandomRestart(searchConfiguration, rand, initialLimitOnMaxNodesExpanded, increamentInLimit);
 	
