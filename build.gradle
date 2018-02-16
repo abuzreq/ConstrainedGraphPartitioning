@@ -9,6 +9,20 @@
 // Apply the java-library plugin to add support for Java Library
 apply plugin: 'java-library'
 
+
+sourceSets
+{
+	main
+	{
+		java
+		{
+			srcDirs 'src/java/main' ,'src/java/tests'
+		
+		}
+	}
+
+}
+
 // In this section you declare where to find the dependencies of your project
 repositories {
     mavenCentral()  
