@@ -22,13 +22,13 @@ As is explained in the presentation, we can assign properties to the nodes in th
 Examples illustrating this technique can be found under java/tests/isomorphism_mapping which illustrate the examples mentioned in the presentation.
 
 ### Initial State Sensitivity and Random Restarting
-The class InitialStateSensitivityRunsAnalysis is an illustration of the sensitivity of the initial state. It also illustrated how a Restart Policy is implemented to solve this problem.
+The class InitialStateSensitivityRunsAnalysis is an illustration of the sensitivity of the initial state. It also illustrates how a Restart Policy is implemented to solve this problem.
 
 ### Notes:
 You can use the TestUtils class (under java/tests/util) to read Basic and Constraint graphs from files
 
 # Installation:
-This is a Gradle project. You use an IDE like Eclipse (after having the the Gradle Integration installed)
+This is a Gradle project. You can use an IDE like Eclipse (after having the the Gradle Integration installed)
 
 # Contact
-I am intersted in making this code accessible and easy to use to game developers and researchers alike, if you faced problems or have any suggestions, feel free to contact me at  abuzreq at gmail dot com
+I am interested in making this code accessible and easy to use to game developers and researchers alike, if you faced problems or have any suggestions, feel free to contact me at  abuzreq at gmail dot com
