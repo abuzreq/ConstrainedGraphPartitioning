@@ -1,11 +1,15 @@
+# Update
+A more mature formulation can be found in my subsequent paper:
+Abuzuraiq, A. M., Ferguson, A., & Pasquier, P. (2019, August). Taksim: A Constrained Graph Partitioning Framework for Procedural Content Generation. In 2019 IEEE Conference on Games (CoG) (pp. 1-8). IEEE.
+
+I intend to provide the source code of that paper soon. The presentaion of Taksim can be seen [Here](https://www.youtube.com/watch?v=Bu3m_7-3Tm4&list=FL-Z_nrHntYILlQn017zopHQ&index=2&t=2331s).
+
+
 # About
 This is the source code of the algorithm described in the paper:
-"On Using Graph Partitioning with Isomorphism Constraint in Procedural Content Generation"
-presented at PCG Workshop 2017 part of FDG 2017
+Abuzuraiq, A. M. (2017, August). On using graph partitioning with isomorphism constraint in procedural content generation. In Proceedings of the 12th International Conference on the Foundations of Digital Games (p. 77). ACM.
 
-You can see the presentation at:
-https://www.youtube.com/watch?v=Te2ek89EEUs
-
+You can see the presentation [here](https://www.youtube.com/watch?v=Te2ek89EEUs)
 
 As is explained in the presentation, two ways of introducing variations are available. The first is when the Basic Graph is fixed (e.g. a fixed level with its underlying navmesh or a fixed 2D grid graph) and in this case variations are introduced through a stochastic initial partitioning. In the second mode, the Basic Graph can change and in this can a generator for this Basic Graph must be provided (e.g. a Voronoi map generator) a deterministic initial partitioning is done in this case. 
 
