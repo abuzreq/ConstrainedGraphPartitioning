@@ -1,9 +1,9 @@
 # Update
 A more mature formulation can be found in my subsequent paper:
-Abuzuraiq, A. M., Ferguson, A., & Pasquier, P. (2019, August). Taksim: A Constrained Graph Partitioning Framework for Procedural Content Generation. In 2019 IEEE Conference on Games (CoG) (pp. 1-8). IEEE.
+Abuzuraiq, A. M., Ferguson, A., & Pasquier, P. (2019, August). [Taksim: A Constrained Graph Partitioning Framework for Procedural Content Generation](https://abuzreq.netlify.app/pdfs/inproceedings/taksim_2019.pdf). In 2019 IEEE Conference on Games (CoG) (pp. 1-8). IEEE.
 
-I intend to provide the source code of that paper soon. The presentaion of Taksim can be seen [Here](https://www.youtube.com/watch?v=Bu3m_7-3Tm4&list=FL-Z_nrHntYILlQn017zopHQ&index=2&t=2331s).
-
+The presentaion of Taksim can be seen [Here](https://www.youtube.com/watch?v=Bu3m_7-3Tm4&list=FL-Z_nrHntYILlQn017zopHQ&index=2&t=2331s).
+The source code for Taksim can be found [Here](https://github.com/abuzreq/Taksim)
 
 # About
 This is the source code of the algorithm described in the paper:
